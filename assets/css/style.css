@@ -2,10 +2,12 @@
 body{
     font-family: 'Roboto', sans-serif;
     
-    background-color: salmon
+  
 }
 .jumbotron{
  background-color:rgba(36, 86, 143, 0.753);
+ font-weight: bold;
+ color:white
   
 }
 
