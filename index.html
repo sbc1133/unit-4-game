@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+</head>
+
+<body>
+    <div class="jumbotron jumbotron-fluid py-0">
+        <div class="container text-center">
+            <h1 class="display-4">Crystal Collector</h1>
+        </div>
+        <div class="row container-fluid">
+            <div class="col-md-4  text-center">
+                <div>
+                    <h2 id="win"> 0 </h2>
+                    <div>Win</div>
+                </div>
+                <div>
+                        <h2 id="loss"> 0 </h2>
+                       <div>Loss</div> 
+                    </div>
+            </div>
+            <div class="col-md-4  text-center">
+                <div>
+                    <p id="randomNumber"></p>
+                    Number to Match
+                </div>
+            </div>
+
+            <div class="col-md-4  text-center">
+                <div>
+                    <p id = "totalScore"> 0 </p>
+                    Total Score
+                </div>
+            </div>
+        </div>
+       
+        </div>
+
+        <div class = "container ">
+            <div class ="row text-center crystal">
+                <div class="col-md-3" >
+                        <img id ="crystal1" src="assets/images/realRedDiamond.png">
+                </div>
+                <div class="col-md-3" >
+                        <img id ="crystal2" src="assets/images/bluesaphhire.png">
+                </div>
+                <div class="col-md-3" >
+                        <img id ="crystal3" src="assets/images/emerald.png">
+                </div>
+                <div class="col-md-3" >
+                        <img id = "crystal4" src="assets/images/topaz.png">
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <br>
+            <br>
+            <p>This is a guessing game using numbers where the player will guess with numbers.
+                There will be four crystals displayed as buttons on the page.
+                The player will be shown a random number at the start of the game.
+                When the player clicks on a crystal it will add a specific amount of points to the player's total score.
+                The player wins the game if their total score matches the random number and the player loses the game if their total score goes above the random number.
+                The amount of points each crystal adds is not shown to the player, but their total score is displayed and updated after each crystal is clicked.
+                The number of games won and lost will be displayed.
+                If the player successfully matches their total score to the random number they get 1 win, if the player's total score is above the random number the player get 1 loss, either way the game restarts.
+                When the game is restarted, the player will be shown a new random number, all the crystals will now have 4 different hidden values, and the player's total score is reset to 0.</p>
+        </div>
+        <div class ="footer">
+
+            <div class="container text-center">
+                <span class="text-muted ">Copyright 2019</span>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+    <script>
+            var win = 0;
+            var loss = 0;
+            function createRandom() {
+                return Math.floor((Math.random() * 102)+19);
+            }
+            function createCrystal() {
+                return Math.floor((Math.random() * 12)+1);
+            }
+            var game = {
+                crystalQty: 4,
+                randomNumber: 0,
+                crystal1: 0,
+                crystal2: 0,
+                crystal3: 0,
+                crystal4: 0,
+                totalScore: 0,
+            }
+    
+            $(document).ready(function () {
+    
+           
+    
+                // setting Random variable 
+                game.randomNumber = createRandom();
+                $("#randomNumber").text(game.randomNumber)
+    
+                //setting crystal variable 
+                game.crystal1 = createCrystal();
+                game.crystal2 = createCrystal();
+                game.crystal3 = createCrystal();
+                game.crystal4 = createCrystal();
+    
+                // $("#crystal1").text(game.crystal1);
+                $("#crystal1").attr("data-crystal", game.crystal1);
+               // $("#crystal2").text(game.crystal2)
+                $("#crystal2").attr("data-crystal", game.crystal2);
+               // $("#crystal3").text(game.crystal3)
+                $("#crystal3").attr("data-crystal", game.crystal3);
+                //$("#crystal4").text(game.crystal4)
+                $("#crystal4").attr("data-crystal", game.crystal4);
+    
+                // setting Win and loss 
+                $("#win").text(win)
+                $("#loss").text(loss)
+    
+                //setting total score 
+                $("#totalScore").text(game.totalScore)
+                
+
+            
+
+
+
+                //--------function for comparing ----
+                function compareScore(total_score) {
+                    if (total_score === game.randomNumber) {
+                        win = win + 1;
+                        console.log("you win this many time = " + win);
+                        $("#win").attr("data-win", win).text(win);
+                        resetGame()
+                    } else if (total_score > game.randomNumber) {
+                        loss = loss + 1;
+                        console.log("you loose thgis many times: " + loss)
+                        $("#loss").attr("data-loose", loss).text(loss);
+                        resetGame()
+                    }
+                }
+    
+                //--------Function for game reset------------
+    
+                function resetGame() {
+                    game.randomNumber = createRandom();
+                    $("#randomNumber").text(game.randomNumber)
+                    game.crystal1 = createCrystal();
+                    game.crystal2 = createCrystal();
+                    game.crystal3 = createCrystal();
+                    game.crystal4 = createCrystal();
+                    game.totalScore = 0;
+                  
+                    $("#crystal1").attr("data-crystal", game.crystal1);
+                  
+                    $("#crystal2").attr("data-crystal", game.crystal2);
+                  
+                    $("#crystal3").attr("data-crystal", game.crystal3);
+                  
+                    $("#crystal4").attr("data-crystal", game.crystal4);
+                    $("#totalScore").text(game.totalScore);
+                }
+    
+                //----- Now the second stage is to look for events --------
+    
+                $("#crystal1").on("click", function () {
+                    var valCrystal1 = $("#crystal1").attr("data-crystal");
+                    $("#crystal1").effect("pulsate",{times:1},500);
+                    console.log("crystal1 = " + valCrystal1);
+                    game.totalScore = game.totalScore + parseInt(valCrystal1);
+                    console.log("game total =" + game.totalScore);
+                    $("#totalScore").attr("data-score", game.totalScore).text(game.totalScore);
+                    compareScore(game.totalScore)
+                })
+    
+                $("#crystal2").on("click", function () {
+                    var valCrystal2 = $("#crystal2").attr("data-crystal");
+                    $("#crystal2").effect("pulsate",{times:1},500);
+                    console.log("crystal1 = " + valCrystal2);
+                    game.totalScore = game.totalScore + parseInt(valCrystal2);
+                    console.log("game total =" + game.totalScore);
+                    $("#totalScore").attr("data-score", game.totalScore).text(game.totalScore);
+                    compareScore(game.totalScore)
+                })
+                $("#crystal3").on("click", function () {
+                    var valCrystal3 = $("#crystal3").attr("data-crystal");
+                    $("#crystal3").effect("pulsate",{times:1},500);
+                    console.log("crystal3 = " + valCrystal3);
+                    game.totalScore = game.totalScore + parseInt(valCrystal3);
+                    console.log("game total =" + game.totalScore);
+                    $("#totalScore").attr("data-score", game.totalScore).text(game.totalScore);
+                    compareScore(game.totalScore)
+    
+                })
+                $("#crystal4").on("click", function () {
+                    var valCrystal4 = $("#crystal4").attr("data-crystal");
+                    $("#crystal4").effect("pulsate",{times:1},500);
+                    console.log("crystal4 = " + valCrystal4);
+                    game.totalScore = game.totalScore + parseInt(valCrystal4);
+                    console.log("game total =" + game.totalScore);
+                    $("#totalScore").attr("data-score", game.totalScore).text(game.totalScore);
+                    compareScore(game.totalScore)
+    
+                })
+            }
+            );
+        </script>
+</body>
+
+</html>
